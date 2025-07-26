@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import RegisterPage from "../pages/RegisterPage";
 
 const LoginForm = () => {
   const navigate = useNavigate();
