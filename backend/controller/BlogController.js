@@ -39,4 +39,16 @@ const getAllBlogs = async (req, res) => {
   }
 };
 
-module.exports = { addBlog, getAllBlogs };
+const deleteBlog = async (req, res) => {
+  const blogId = req.params.blogId;
+  console.log(blogId);
+
+  try {
+    await Blog.findByIdAndDelete(blogId);
+    res.status(200).json({ message: "Blog Deleted Successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Server Error!" });
+  }
+};
+
+module.exports = { addBlog, getAllBlogs, deleteBlog };

@@ -1,4 +1,5 @@
 const User = require("../model/UserModel");
+const bcrypt = require("bcrypt");
 
 const registerUser = async (req, res) => {
   const name = req.body.name;
@@ -19,10 +20,12 @@ const registerUser = async (req, res) => {
       return res.status(409).json({ message: "User Already Exists!" });
     }
 
+    const hashedPassword = await bcrypt.hash(pass, 10);
+
     const userData = {
       name,
       email,
-      pass,
+      pass: hashedPassword,
       phonenum,
       gender,
     };
@@ -46,19 +49,16 @@ const loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ email });
 
-    if (!email || !pass) {
+    if (!email || !pass)
       return res
         .status(404)
         .json({ message: "All fields needs to be filled!" });
-    }
 
-    if (!user) {
-      return res.status(404).json({ message: "User Not Found!" });
-    }
+    if (!user) return res.status(404).json({ message: "Invalid Credentials!" });
 
-    if (pass !== user.pass) {
+    const isMatch = await bcrypt.compare(pass, user.pass);
+    if (!isMatch)
       return res.status(400).json({ message: "Invalid Credentials!" });
-    }
 
     res.status(200).json({ message: "Logged in successfully!", user: user });
   } catch (err) {
