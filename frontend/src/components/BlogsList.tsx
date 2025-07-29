@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 interface Blog {
@@ -52,7 +52,7 @@ const BlogList = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-4">
+    <div className="min-w-[700px] max-w-3xl w-full mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Blog Posts</h1>
       {error && <p>{error}</p>}
       {blogs.length === 0 && <p>No blogs found.</p>}

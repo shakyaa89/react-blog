@@ -1,19 +1,12 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const NavBar = () => {
-  const linkClass =
-    "text-gray-700 font-medium hover:text-blue-600 px-3 py-2 transition";
-
-  const activeClass = "text-blue-600 font-semibold border-b-2 border-blue-600";
-
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
   const loadUser = () => {
     const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setIsLoggedIn(true);
-    }
+    setIsLoggedIn(!!storedUser);
   };
 
   useEffect(() => {
@@ -33,7 +26,6 @@ const NavBar = () => {
   }, []);
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
     localStorage.removeItem("user");
     window.dispatchEvent(new Event("user-auth-changed"));
   };
@@ -42,34 +34,28 @@ const NavBar = () => {
     <div>
       <nav className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-          <NavLink
+          <Link
             to="/"
             className="text-2xl font-bold text-blue-600 hover:opacity-80"
           >
             Blogify
-          </NavLink>
+          </Link>
           <div className="space-x-4">
             <NavLink
               to="/"
-              className={({ isActive }) =>
-                isActive ? `${linkClass} ${activeClass}` : linkClass
-              }
+              className="text-gray-700 font-medium hover:text-blue-600 px-3 py-2 transition"
             >
               Home
             </NavLink>
             <NavLink
               to="/about"
-              className={({ isActive }) =>
-                isActive ? `${linkClass} ${activeClass}` : linkClass
-              }
+              className="text-gray-700 font-medium hover:text-blue-600 px-3 py-2 transition"
             >
               About
             </NavLink>
             <NavLink
               to="/blog"
-              className={({ isActive }) =>
-                isActive ? `${linkClass} ${activeClass}` : linkClass
-              }
+              className="text-gray-700 font-medium hover:text-blue-600 px-3 py-2 transition"
             >
               Posts
             </NavLink>
@@ -83,9 +69,7 @@ const NavBar = () => {
             ) : (
               <NavLink
                 to="/login"
-                className={({ isActive }) =>
-                  isActive ? `${linkClass} ${activeClass}` : linkClass
-                }
+                className="text-gray-700 font-medium hover:text-blue-600 px-3 py-2 transition"
               >
                 Login
               </NavLink>
