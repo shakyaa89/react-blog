@@ -27,6 +27,7 @@ const NavBar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("accessToken");
     window.dispatchEvent(new Event("user-auth-changed"));
   };
 

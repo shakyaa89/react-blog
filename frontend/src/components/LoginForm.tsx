@@ -24,7 +24,8 @@ const LoginForm = () => {
 
       if (response.status === 200) {
         alert("Logged in successfully!");
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("user", JSON.stringify(response?.data?.user));
+        localStorage.setItem("accessToken", response?.data?.accessToken);
         window.dispatchEvent(new Event("user-auth-changed"));
         navigate("/");
       }
